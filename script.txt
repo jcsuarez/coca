@@ -1,0 +1,16 @@
+require(twitteR)
+
+acctoken <- ""
+accsecret<- ""
+apiKey <- ""
+apiSecret <- ""
+setup_twitter_oauth(apiKey, apiSecret, acctoken, accsecret)
+
+
+tweetscol = searchTwitter("cocaine", since='2014-06-27', until='2014-06-29', n=10000)
+to<- twListToDF(tweetscol)
+metadata <- data.frame(c( as.Date(to$created),to$text, to$screenName, to$retweetCount, to$favoriteCount))
+
+# Acá la database con hora UCL
+write.csv(metadata, "time.csv")
+
